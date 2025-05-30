@@ -2,7 +2,7 @@ import RealityKit
 import SwiftUI
 import os
 
-private let logger = Logger(subsystem: GuidedCaptureSampleApp.subsystem, category: "TopOverlayButtons")
+private let logger = Logger(subsystem: PhotometryARApp.subsystem, category: "TopOverlayButtons")
 
 struct TopOverlayButtons: View, OverlayButtons {
     @Environment(AppDataModel.self) var appModel

@@ -1,26 +1,17 @@
 import SwiftUI
 import os
 
-private let logger = Logger(subsystem: GuidedCaptureSampleApp.subsystem,
+private let logger = Logger(subsystem: PhotometryARApp.subsystem,
                             category: "TimedMessageList")
 
-/// Use a `TimedMessageList` to add a message to a FIFO for display with some minimum duration. The time can be extended
-/// if it gets refreshed. This object will automatically remove items whose timer has expired.
-/// Because this is `Observable`, SwiftUI can use it to directly update a `View`.
-/// The changes to `messages` are done inside `withAnimation` to allow transitions as well.
+/// FIFO очередь для сообщений пользователю
+/// Автоматически обновляет интерфейс приложения
 @Observable
 class TimedMessageList {
-    // A `Message` is unique at creation, with identity separate from its actual message string and
-    // ending time so that SwiftUI has a consistent identity for animation purposes when time changes.
-    // Not tying the identity to the string means the app can duplicate messages in the
-    // list with different end times, if desired.
     struct Message: Identifiable {
-        // Keep the ID stable for the animation to work properly.
         let id = UUID()
         let message: String
         let startTime: Date
-        // Only this implementation can change the `endTime` to maintain a single timer state.
-        // Callers need to go through the `TimedMessageList` directly to extend time.
         fileprivate(set) var endTime: Date?
 
         init(_ msg: String, startTime inStartTime: Date = Date()) {
@@ -39,8 +30,6 @@ class TimedMessageList {
 
     var activeMessage: Message? = nil
 
-    /// Ordered list of messages added to the list. Updated by public calls to add new elements or refresh the timers on existing
-    /// ones. Automatically removes expired messages based on `endTime`.
     private var messages: [Message] = [] {
         didSet {
             dispatchPrecondition(condition: .onQueue(.main))
@@ -53,16 +42,12 @@ class TimedMessageList {
         }
     }
 
-    /// If there are any items in messages, the timer is set to execute on the nearest `endTime`.
     private var timer: Timer?
 
     private let feedbackMessageMinimumDurationSecs: Double = 2.0
 
     init() { }
 
-    /// Adds a new message with the given `msg` string.
-    ///
-    /// - Parameter msg: A string to display for the message.
     func add(_ msg: String) {
         dispatchPrecondition(condition: .onQueue(.main))
 
@@ -73,10 +58,7 @@ class TimedMessageList {
         }
         setTimer()
     }
-
-    /// Removes the message with the given `msg` string.
-    ///
-    /// - Parameter msg: A string to display for the message.
+    
     func remove(_ msg: String) {
         dispatchPrecondition(condition: .onQueue(.main))
 
@@ -90,7 +72,6 @@ class TimedMessageList {
         setTimer()
     }
 
-    /// Removes all messages.
     func removeAll() {
         timer?.invalidate()
         timer = nil
@@ -98,14 +79,12 @@ class TimedMessageList {
         messages.removeAll()
     }
 
-    /// Sets a timer to execute for the nearest future `endTime`.
     private func setTimer() {
         dispatchPrecondition(condition: .onQueue(.main))
 
         timer?.invalidate()
         timer = nil
 
-        // Cull expired timers then find the next expiration and make a new timer.
         cullExpired()
         if let nearestEndTime = (messages.compactMap { $0.endTime }).min() {
             let duration = nearestEndTime.timeIntervalSinceNow
@@ -126,7 +105,6 @@ class TimedMessageList {
         }
     }
 
-    /// Internal callback for the `Timer()`.
     @objc
     private func onTimer() {
         dispatchPrecondition(condition: .onQueue(.main))

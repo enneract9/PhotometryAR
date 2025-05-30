@@ -1,9 +1,7 @@
-// An `AsyncSequence` filter to apply to the `PhotogrammetrySession.Outputs` infinite sequence so that it passes through
-// all Output messages until it receives a `.processingComplete` (or `.processingCancelled`). This allows the infinite stream
-// to be monitored within a Task only until the current `process()` call is complete, so the filtered stream will be finite.
-
 import RealityKit
 
+/// Асинхранный итератор соостояний PhotogrammetrySession во время реконструкции
+/// Работает пока не встретилось .processingComplete или .processingCancelled
 struct UntilProcessingCompleteFilter<Base>: AsyncSequence, AsyncIteratorProtocol
         where Base: AsyncSequence, Base.Element == PhotogrammetrySession.Output {
     func makeAsyncIterator() -> UntilProcessingCompleteFilter {

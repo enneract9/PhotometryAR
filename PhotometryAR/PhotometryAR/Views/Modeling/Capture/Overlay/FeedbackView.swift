@@ -1,7 +1,7 @@
 import SwiftUI
 import os
 
-private let logger = Logger(subsystem: GuidedCaptureSampleApp.subsystem,
+private let logger = Logger(subsystem: PhotometryARApp.subsystem,
                             category: "FeedbackView")
 
 struct FeedbackView: View {

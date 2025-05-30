@@ -13,15 +13,11 @@ struct OnboardingTutorialView: View {
             switch appModel.captureMode {
                 case .object:
                     ZStack {
-//                        if shouldShowTutorialInReview, let url = tutorialUrl {
-//                            TutorialVideoView(url: url, isInReviewSheet: true)
-//                        } else {
                             VStack {
                                 Spacer()
                                 ObjectCapturePointCloudView(session: session)
                                 Spacer()
                             }
-//                        }
 
                         VStack {
                             Spacer()
@@ -72,39 +68,6 @@ struct OnboardingTutorialView: View {
             .padding([.leading, .trailing], UIDevice.current.userInterfaceIdiom == .pad ? 50 : 30)
         }
     }
-
-//    private var shouldShowTutorialInReview: Bool {
-//        switch onboardingStateMachine.currentState {
-//            case .flipObject, .flipObjectASecondTime, .captureFromLowerAngle, .captureFromHigherAngle:
-//                return true
-//            default:
-//                return false
-//        }
-//    }
-
-//    private let onboardingStateToTutorialNameMapOnIphone: [ OnboardingState: String ] = [
-//        .flipObject: "ScanPasses-iPhone-FixedHeight-2",
-//        .flipObjectASecondTime: "ScanPasses-iPhone-FixedHeight-3",
-//        .captureFromLowerAngle: "ScanPasses-iPhone-FixedHeight-unflippable-low",
-//        .captureFromHigherAngle: "ScanPasses-iPhone-FixedHeight-unflippable-high"
-//    ]
-//
-//    private let onboardingStateToTutorialNameMapOnIpad: [ OnboardingState: String ] = [
-//        .flipObject: "ScanPasses-iPad-FixedHeight-2",
-//        .flipObjectASecondTime: "ScanPasses-iPad-FixedHeight-3",
-//        .captureFromLowerAngle: "ScanPasses-iPad-FixedHeight-unflippable-low",
-//        .captureFromHigherAngle: "ScanPasses-iPad-FixedHeight-unflippable-high"
-//    ]
-//
-//    private var tutorialUrl: URL? {
-//        let videoName: String
-//        if UIDevice.current.userInterfaceIdiom == .pad {
-//            videoName = onboardingStateToTutorialNameMapOnIpad[onboardingStateMachine.currentState] ?? "ScanPasses-iPad-FixedHeight-1"
-//        } else {
-//            videoName = onboardingStateToTutorialNameMapOnIphone[onboardingStateMachine.currentState] ?? "ScanPasses-iPhone-FixedHeight-1"
-//        }
-//        return Bundle.main.url(forResource: videoName, withExtension: "mp4")
-//    }
 
     private func getOrbitImageName(orbit: AppDataModel.Orbit) -> String? {
         guard let session = appModel.objectCaptureSession else { return nil }

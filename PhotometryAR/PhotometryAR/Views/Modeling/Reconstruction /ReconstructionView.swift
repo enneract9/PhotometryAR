@@ -2,7 +2,7 @@ import RealityKit
 import SwiftUI
 import os
 
-private let logger = Logger(subsystem: GuidedCaptureSampleApp.subsystem, category: "ReconstructionView")
+private let logger = Logger(subsystem: PhotometryARApp.subsystem, category: "ReconstructionView")
 
 struct ReconstructionView: View {
     @Environment(AppDataModel.self) var appModel

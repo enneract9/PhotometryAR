@@ -2,7 +2,7 @@ import RealityKit
 import SwiftUI
 import os
 
-private let logger = Logger(subsystem: GuidedCaptureSampleApp.subsystem, category: "BottomOverlayButtons")
+private let logger = Logger(subsystem: PhotometryARApp.subsystem, category: "BottomOverlayButtons")
 
 struct BottomOverlayButtons: View, OverlayButtons {
     @Environment(AppDataModel.self) var appModel
@@ -240,7 +240,7 @@ private struct CaptureModeButton: View {
             withAnimation {
                 showCaptureModeGuidance = true
             }
-            // Cancel the previous scheduled timer.
+            
             if captureModeGuidanceTimer != nil {
                 captureModeGuidanceTimer?.invalidate()
                 captureModeGuidanceTimer = nil

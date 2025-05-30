@@ -3,7 +3,7 @@ import RealityKit
 import SwiftUI
 import os
 
-private let logger = Logger(subsystem: GuidedCaptureSampleApp.subsystem, category: "CaptureOverlayView")
+private let logger = Logger(subsystem: PhotometryARApp.subsystem, category: "CaptureOverlayView")
 
 struct CaptureOverlayView: View {
     @Environment(AppDataModel.self) var appModel
@@ -77,6 +77,7 @@ struct CaptureOverlayView: View {
     }
 }
 
+/// Подсказки порядка действий
 private struct BoundingBoxGuidanceView: View {
     @Environment(AppDataModel.self) var appModel
     var session: ObjectCaptureSession

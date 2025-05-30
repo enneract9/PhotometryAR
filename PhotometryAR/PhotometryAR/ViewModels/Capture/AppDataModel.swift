@@ -2,7 +2,7 @@ import RealityKit
 import SwiftUI
 import os
 
-private let logger = Logger(subsystem: GuidedCaptureSampleApp.subsystem,
+private let logger = Logger(subsystem: PhotometryARApp.subsystem,
                             category: "AppDataModel")
 
 @MainActor
@@ -10,7 +10,8 @@ private let logger = Logger(subsystem: GuidedCaptureSampleApp.subsystem,
 class AppDataModel: Identifiable {
     static let instance = AppDataModel()
 
-    /// When we start the capture phase, this will be set to the correct locations in the captureFolderManager.
+    /// Модель сессии сканирования 3D-объекта
+    /// Устанавливается при начале сканирования
     var objectCaptureSession: ObjectCaptureSession? {
         willSet {
             detachListeners()
@@ -23,14 +24,10 @@ class AppDataModel: Identifiable {
 
     static let minNumImages = 10
 
-    /// Once we are headed to reconstruction portion, we will hold the session here.
+    /// Модель сессии реконструкции 3D-объекта
     private(set) var photogrammetrySession: PhotogrammetrySession?
 
-    /// When we start a new capture, the folder will be set here.
     private(set) var captureFolderManager: CaptureFolderManager?
-
-    /// Shows whether the user decided to skip reconstruction.
-//    private(set) var isSaveDraftEnabled = false
 
     var messageList = TimedMessageList()
 
@@ -59,8 +56,6 @@ class AppDataModel: Identifiable {
     var hasIndicatedObjectCannotBeFlipped: Bool = false
     var hasIndicatedFlipObjectAnyway: Bool = false
     var isObjectFlippable: Bool {
-        // Override the objectNotFlippable feedback if the user has indicated
-        // the object cannot be flipped or if they want to flip the object anyway
         guard !hasIndicatedObjectCannotBeFlipped else { return false }
         guard !hasIndicatedFlipObjectAnyway else { return true }
         guard let session = objectCaptureSession else { return true }
@@ -74,17 +69,13 @@ class AppDataModel: Identifiable {
 
     var captureMode: CaptureMode = .object
 
-    // When state moves to failed, this is the error causing it.
     private(set) var error: Swift.Error?
 
-    // Use setShowOverlaySheets(to:) to change this so you can maintain ObjectCaptureSession's pause state
-    // properly because you don't hide the ObjectCaptureView. If you hide the ObjectCaptureView it pauses automatically.
+    // Нужно для состояния паузы ObjectCaptureSession
     private(set) var showOverlaySheets = false
 
-    // Shows whether the tutorial has played once during a session.
     var tutorialPlayedOnce = false
 
-    // Postpone creating ObjectCaptureSession and PhotogrammetrySession until necessary.
     private init() {
         state = .ready
         NotificationCenter.default.addObserver(self,
@@ -100,10 +91,6 @@ class AppDataModel: Identifiable {
         }
     }
 
-    /// Once reconstruction and viewing are complete, this should be called to let the app know it can go back to the new capture
-    /// view.  We explicitly DO NOT destroy the model here to avoid transition state errors.  The splash screen will set up the
-    /// AppDataModel to a clean slate when it starts.
-    /// This can also be called after a cancelled or error reconstruction to go back to the start screen.
     func endCapture() {
         state = .completed
     }
@@ -114,9 +101,6 @@ class AppDataModel: Identifiable {
         try? FileManager.default.removeItem(at: url)
     }
 
-    // Don't touch the showOverlaySheets directly, call setShowOverlaySheets() instead.
-    // Since we use sheets and leave the ObjectCaptureView on screen and blur it underneath,
-    // the session doesn't pause. We need to pause/resume the session by hand.
     func setShowOverlaySheets(to shown: Bool) {
         guard shown != showOverlaySheets else { return }
         if shown {
@@ -127,11 +111,6 @@ class AppDataModel: Identifiable {
             showOverlaySheets = false
         }
     }
-
-//    func saveDraft() {
-//        objectCaptureSession?.finish()
-//        isSaveDraftEnabled = true
-//    }
 
     // - MARK: Private Interface
 
@@ -184,7 +163,6 @@ extension AppDataModel {
         }
     }
 
-    // Should be called when a new capture is to be created, before the session will be needed.
     private func startNewCapture() throws {
         logger.log("startNewCapture() called...")
         if !ObjectCaptureSession.isSupported {
@@ -218,13 +196,12 @@ extension AppDataModel {
     }
 
     private func switchToErrorState(error inError: Swift.Error) {
-        // Set the error first since the transitions will assume it is non-nil!
         error = inError
         state = .failed
     }
 
-    // Moves from prepareToReconstruct to .reconstructing.
-    // Should be called from the ReconstructionPrimaryView async task once it is on the screen.
+    // prepareToReconstruct -> reconstructing
+    // вызывается ReconstructionPrimaryView
     private func startReconstruction() throws {
         logger.debug("startReconstruction() called.")
 
@@ -257,7 +234,6 @@ extension AppDataModel {
         messageList.removeAll()
         captureMode = .object
         state = .ready
-//        isSaveDraftEnabled = false
         tutorialPlayedOnce = false
     }
 
@@ -265,13 +241,8 @@ extension AppDataModel {
         logger.info("OCViewModel switched to state: \(String(describing: newState))")
         if case .completed = newState {
             logger.log("ObjectCaptureSession moved in .completed state.")
-//            if isSaveDraftEnabled {
-//                logger.log("The data is stored. Closing the session...")
-//                reset()
-//            } else {
-                logger.log("Switch app model to reconstruction...")
-                state = .prepareToReconstruct
-//            }
+            logger.log("Switch app model to reconstruction...")
+            state = .prepareToReconstruct
         } else if case let .failed(error) = newState {
             logger.error("OCS moved to error state \(String(describing: error))...")
             if case ObjectCaptureSession.Error.cancelled = error {
@@ -283,10 +254,8 @@ extension AppDataModel {
     }
 
     private func updateFeedbackMessages(for feedback: Set<Feedback>) {
-        // Compare the incoming feedback with the previous feedback to find the intersection.
         let persistentFeedback = currentFeedback.intersection(feedback)
 
-        // Find the feedbacks that are not active anymore.
         let feedbackToRemove = currentFeedback.subtracting(persistentFeedback)
         for thisFeedback in feedbackToRemove {
             if let feedbackString = FeedbackMessages.getFeedbackString(for: thisFeedback, captureMode: captureMode) {
@@ -294,7 +263,6 @@ extension AppDataModel {
             }
         }
 
-        // Find the new feedbacks.
         let feebackToAdd = feedback.subtracting(persistentFeedback)
         for thisFeedback in feebackToAdd {
             if let feedbackString = FeedbackMessages.getFeedbackString(for: thisFeedback, captureMode: captureMode) {
@@ -340,7 +308,6 @@ extension AppDataModel {
     }
 
     private func removeCheckpointFolder() {
-        // Remove checkpoint folder to free up space now that the model is generated.
         if let captureFolderManager {
             DispatchQueue.global(qos: .background).async {
                 try? FileManager.default.removeItem(at: captureFolderManager.checkpointFolder)

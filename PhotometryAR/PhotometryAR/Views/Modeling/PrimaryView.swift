@@ -2,7 +2,7 @@ import SwiftUI
 
 import os
 
-private let logger = Logger(subsystem: GuidedCaptureSampleApp.subsystem, category: "PrimaryView")
+private let logger = Logger(subsystem: PhotometryARApp.subsystem, category: "PrimaryView")
 
 struct PrimaryView: View {
     @Environment(AppDataModel.self) var appModel

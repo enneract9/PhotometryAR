@@ -2,9 +2,11 @@ import RealityKit
 import SwiftUI
 import os
 
-private let logger = Logger(subsystem: GuidedCaptureSampleApp.subsystem, category: "OnboardingView")
+private let logger = Logger(subsystem: PhotometryARApp.subsystem, category: "OnboardingView")
 
-/// The view that shows the guidance text and tutorials on the review screen.
+/// Онбординг
+/// Показывает текущее состояние процесса сканирования после завершения этапа сканирования
+/// Содержит кнопку онбординга (соответсвующее состоянию действие)
 struct OnboardingView: View {
     @Environment(AppDataModel.self) var appModel
     private var stateMachine: OnboardingStateMachine

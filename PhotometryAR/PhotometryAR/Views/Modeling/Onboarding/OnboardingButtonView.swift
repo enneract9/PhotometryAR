@@ -2,9 +2,9 @@ import RealityKit
 import SwiftUI
 import os
 
-private let logger = Logger(subsystem: GuidedCaptureSampleApp.subsystem, category: "OnboardingButtonView")
+private let logger = Logger(subsystem: PhotometryARApp.subsystem, category: "OnboardingButtonView")
 
-/// The view that creates the buttons on the review screen, depending on `currentState` in `onboardingStateMachine`.
+/// Кнопка онбординга, зависящая от состояния onboardingStateMachine
 struct OnboardingButtonView: View {
     @Environment(AppDataModel.self) var appModel
     var session: ObjectCaptureSession
@@ -73,15 +73,6 @@ struct OnboardingButtonView: View {
                     onboardingStateMachine.currentState == .thirdSegmentComplete {
                     CreateButton(buttonLabel: "", action: {})
                 }
-//                if currentStateInputs.contains(where: { $0 == .saveDraft }) {
-//                    let showBusyIndicator = session.state == .finishing && appModel.isSaveDraftEnabled ? true : false
-//                    CreateButton(buttonLabel: "Сохранить черновик",
-//                                 buttonLabelColor: .blue,
-//                                 showBusyIndicator: showBusyIndicator,
-//                                 action: { [weak appModel] in
-//                        appModel?.saveDraft()
-//                    })
-//                }
             }
             .padding(.bottom)
         }
@@ -116,7 +107,7 @@ struct OnboardingButtonView: View {
             appModel.hasIndicatedFlipObjectAnyway = userHasIndicatedFlipObjectAnyway
         }
 
-        // If the app can't flip an object and person doesn't manually override this, use the same segment and add additional orbits to it.
+        // Дополнительное сканирование по той же орбите, если сессия сканирования утвердила, что переворот объекта невозможен, а пользователь не решил принудительно перевернуть объект
         if !appModel.isObjectFlippable && !appModel.hasIndicatedFlipObjectAnyway {
             session.beginNewScanPass()
         } else {
