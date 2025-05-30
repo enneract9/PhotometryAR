@@ -12,20 +12,17 @@
 		64A07E152BFE9E0F00FDE113 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64A07E022BFE9C7700FDE113 /* ContentView.swift */; };
 		64F43E522BFEB06E0069D4F3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 64F43E512BFEB06E0069D4F3 /* Assets.xcassets */; };
 		66D95BC22DCF728F00C2D46B /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D95BC12DCF728F00C2D46B /* TabBar.swift */; };
-		F9432A622C17AB7000D540FD /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F9432A612C17AB6F00D540FD /* Settings.bundle */; };
 		F9432A642C17AC0500D540FD /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = F9432A632C17AC0500D540FD /* PrivacyInfo.xcprivacy */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		64A07DBB2BFE7CCA00FDE113 /* PhotometryAR.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PhotometryAR.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		64A07DC52BFE7CCB00FDE113 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		64A07DD32BFE7CDA00FDE113 /* GuidedCaptureSampleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuidedCaptureSampleApp.swift; sourceTree = "<group>"; };
 		64A07E022BFE9C7700FDE113 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		64A07E202BFEA1F100FDE113 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		64F43E512BFEB06E0069D4F3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		660D62102DE97E7700A714F7 /* PhotometryAR.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = PhotometryAR.app; path = "/Users/i.vargunin/Study/ВКР/Код/Исходники/PhotometryAR/PhotometryAR/build/Debug-iphoneos/PhotometryAR.app"; sourceTree = "<absolute>"; };
 		66D95BC12DCF728F00C2D46B /* TabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
-		CD61D7696BF8262EF4D5A1D7 /* SampleCode.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = SampleCode.xcconfig; path = ../Configuration/SampleCode.xcconfig; sourceTree = "<group>"; };
-		F9432A612C17AB6F00D540FD /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		F9432A632C17AC0500D540FD /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -51,19 +48,8 @@
 		64A07DB22BFE7CCA00FDE113 = {
 			isa = PBXGroup;
 			children = (
-				F9432A612C17AB6F00D540FD /* Settings.bundle */,
 				64A07DBD2BFE7CCA00FDE113 /* PhotometryAR */,
-				64A07DBC2BFE7CCA00FDE113 /* Products */,
-				E916D38D0EF567740965384B /* Configuration */,
 			);
-			sourceTree = "<group>";
-		};
-		64A07DBC2BFE7CCA00FDE113 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				64A07DBB2BFE7CCA00FDE113 /* PhotometryAR.app */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		64A07DBD2BFE7CCA00FDE113 /* PhotometryAR */ = {
@@ -101,14 +87,6 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
-		E916D38D0EF567740965384B /* Configuration */ = {
-			isa = PBXGroup;
-			children = (
-				CD61D7696BF8262EF4D5A1D7 /* SampleCode.xcconfig */,
-			);
-			name = Configuration;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -133,7 +111,7 @@
 			);
 			name = PhotometryAR;
 			productName = GuidedCaptureSample;
-			productReference = 64A07DBB2BFE7CCA00FDE113 /* PhotometryAR.app */;
+			productReference = 660D62102DE97E7700A714F7 /* PhotometryAR.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -161,7 +139,7 @@
 				Base,
 			);
 			mainGroup = 64A07DB22BFE7CCA00FDE113;
-			productRefGroup = 64A07DBC2BFE7CCA00FDE113 /* Products */;
+			productRefGroup = 64A07DB22BFE7CCA00FDE113;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -178,7 +156,6 @@
 				64A07DC62BFE7CCB00FDE113 /* Preview Assets.xcassets in Resources */,
 				64F43E522BFEB06E0069D4F3 /* Assets.xcassets in Resources */,
 				F9432A642C17AC0500D540FD /* PrivacyInfo.xcprivacy in Resources */,
-				F9432A622C17AB7000D540FD /* Settings.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -200,7 +177,6 @@
 /* Begin XCBuildConfiguration section */
 		64A07DC72BFE7CCB00FDE113 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CD61D7696BF8262EF4D5A1D7 /* SampleCode.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -265,7 +241,6 @@
 		};
 		64A07DC82BFE7CCB00FDE113 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CD61D7696BF8262EF4D5A1D7 /* SampleCode.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -323,7 +298,6 @@
 		};
 		64A07DCA2BFE7CCB00FDE113 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CD61D7696BF8262EF4D5A1D7 /* SampleCode.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -360,7 +334,6 @@
 		};
 		64A07DCB2BFE7CCB00FDE113 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CD61D7696BF8262EF4D5A1D7 /* SampleCode.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
