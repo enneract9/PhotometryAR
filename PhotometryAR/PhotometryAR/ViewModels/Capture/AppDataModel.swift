@@ -201,7 +201,7 @@ extension AppDataModel {
     }
 
     // prepareToReconstruct -> reconstructing
-    // вызывается ReconstructionPrimaryView
+    // вызывается ReconstructionView
     private func startReconstruction() throws {
         logger.debug("startReconstruction() called.")
 

@@ -1,5 +1,4 @@
 import SwiftUI
-
 import os
 
 private let logger = Logger(subsystem: PhotometryARApp.subsystem, category: "PrimaryView")

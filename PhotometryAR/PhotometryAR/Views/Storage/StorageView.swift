@@ -35,18 +35,15 @@ struct StorageView: View {
     
     private func ModelCell(url: URL) -> some View {
         NavigationLink(destination: ARView(url: url)) {
-            ThumbnailView(url: url)
-                .contextMenu(menuItems: {
-                    Button("Удалить", role: .destructive) {
-                        Task {
-                            do {
-                                try await storage.removeModel(url: url)
-                            } catch {
-                                print(error.localizedDescription)
-                            }
-                        }
+            ThumbnailView(url: url, removeAction: {
+                Task {
+                    do {
+                        try storage.removeModel(url: url)
+                    } catch {
+                        print(error.localizedDescription)
                     }
-                })
+                }
+            })
         }
     }
     
@@ -68,7 +65,7 @@ struct StorageView: View {
                     do {
                         switch result {
                         case .success(let url):
-                            try await storage.addModel(url: url)
+                            try storage.addModel(url: url)
                         case .failure(let error):
                             throw error
                         }

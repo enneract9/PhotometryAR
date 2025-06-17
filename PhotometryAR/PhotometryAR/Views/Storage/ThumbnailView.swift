@@ -6,10 +6,15 @@ struct ThumbnailView: View {
     /// Путь до модели
     let url: URL
     
-    @State private var image: UIImage? = nil
+    /// Удаление модели
+    let removeAction: () -> Void
     
-    init(url: URL) {
+    @State private var image: UIImage? = nil
+    @State private var showFileExporter = false
+    
+    init(url: URL, removeAction: @escaping () -> Void) {
         self.url = url
+        self.removeAction = removeAction
     }
     
     var body: some View {
@@ -17,7 +22,7 @@ struct ThumbnailView: View {
             if let image {
                 thumbnailImage(uiimage: image)
             } else {
-                ProgressView()                                      // TODO: Шиммер
+                ProgressView()
             }
             title(url.deletingPathExtension().lastPathComponent)
         }
@@ -31,6 +36,24 @@ struct ThumbnailView: View {
             } catch {
                 print(error.localizedDescription)
             }
+        }
+        .contextMenu(menuItems: {
+            Button("Удалить", role: .destructive) {
+                removeAction()
+            }
+            
+            Button {
+                showFileExporter = true
+            } label: {
+                HStack {
+                    Text("Экспорт")
+                    Spacer()
+                    Image(systemName: "square.and.arrow.up")
+                }
+            }
+        })
+        .sheet(isPresented: $showFileExporter) {
+            ActivityView(activityItems: [url])
         }
     }
     
@@ -55,6 +78,6 @@ struct ThumbnailView: View {
     let mockModelStorage: ModelStorage = .mock
     let url = mockModelStorage.urls[0]
     
-    ThumbnailView(url: url)
+    ThumbnailView(url: url, removeAction: {})
         .padding()
 }

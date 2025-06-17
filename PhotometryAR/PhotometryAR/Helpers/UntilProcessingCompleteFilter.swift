@@ -1,6 +1,6 @@
 import RealityKit
 
-/// Асинхранный итератор соостояний PhotogrammetrySession во время реконструкции
+/// Асинхронный итератор соостояний PhotogrammetrySession во время реконструкции
 /// Работает пока не встретилось .processingComplete или .processingCancelled
 struct UntilProcessingCompleteFilter<Base>: AsyncSequence, AsyncIteratorProtocol
         where Base: AsyncSequence, Base.Element == PhotogrammetrySession.Output {

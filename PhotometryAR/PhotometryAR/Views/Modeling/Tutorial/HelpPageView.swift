@@ -64,7 +64,7 @@ private struct HowToCaptureHelpPageView: View {
     var body: some View {
         TutorialPageView(
             pageName: "Как проводить сканирование",
-            imageName: colorScheme == .light ? "OrbitTutorial-light" : "OrbitTutorial",
+            imageName: nil,
             imageCaption: "Перемещайте устройство медленно вокруг объекта, чтобы захватить все его стороны.",
             sections: sections()
         )
